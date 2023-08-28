@@ -4,63 +4,69 @@ import subprocess
 import threading
 import os
 import re
-from father import Level
+from common import Level
 class HostLevel(Level):
-    def __init__(self, app):
-        self.app = app  # 使用传递进来的参数
-    def get_next_level(self):
-          return HostLevel(self.app)
-    def display_menu(self):
-        print("Host Menu:")
-        print("1. Get Memory Info")
-        print("2. Get Cache Info")
-        print("3. Get Process Memory Usage")
-        print("4. Get pmap Info")
-        print("5. Run perf stat for interrupts")
-        print("6. Generate Call Graph Perf Data")
-        print("7. Monitor Memory Bandwidth and Latency")
-        print("8. Perform Hotspot Analysis")
-        print("9. Exit Host Menu")
+    def __init__(self):
+        super().__init__(self)
 
-    def handle_choice(self, choice):
-        if choice == "1":
-            self.get_memory_info()
-        elif choice == "2":
-            self.get_cache_info()
-        elif choice == "3":
-            process_name = input("Enter process name: ")
-            memory_usage = self.get_process_memory_usage(process_name)
-            print("Process Memory Usage:", memory_usage, "MB")
-        elif choice == "4":
-            pid = int(input("Enter process PID: "))
-            pmap_info = self.get_pmap_info(pid)
-            print("pmap Info:", pmap_info)
-        elif choice == "5":
-            pid = int(input("Enter process PID: "))
-            duration = int(input("Enter duration (in seconds): "))
-            stderr = self.get_process_interrupts(pid, duration)
-            print("Interrupts Info:\n", stderr)
-        elif choice == "6":
-            pid = int(input("Enter process PID: "))
-            duration = int(input("Enter duration (in seconds): "))
-            output_filename = input("Enter output filename: ")
-            self.generate_call_graph_perf_data(pid, duration, output_filename)
-            print("Call Graph Perf Data generated and saved to", output_filename)
-        elif choice == "7":
-            pid = int(input("Enter process PID: "))
-            duration = int(input("Enter duration (in seconds): "))
-            self.monitor_memory_bandwidth_latency(pid, duration)
-            print("Monitoring Memory Bandwidth and Latency...")
-        elif choice == "8":
-            pid = int(input("Enter process PID: "))
-            output_file = input("Enter output filename: ")
-            self.perform_hotspot_analysis(pid, output_file)
-            print("Hotspot Analysis data saved to", output_file)
-        elif choice == "q":
-            self.running = False
-        else:
-            print("Invalid choice. Please enter a valid option.")
-
+    
+    def run(self):
+        while(True):
+            print("Host Menu:")
+            print("1. Get Memory Info")
+            print("2. Get Cache Info")
+            print("3. Get Process Memory Usage")
+            print("4. Get pmap Info")
+            print("5. Run perf stat for interrupts")
+            print("6. Generate Call Graph Perf Data")
+            print("7. Monitor Memory Bandwidth and Latency")
+            print("8. Perform Hotspot Analysis")
+            print("9. Exit Host Menu")
+            choice = input("Enter your choice : ")
+            if choice == "1":
+                self.get_memory_info()
+            elif choice == "2":
+                self.get_cache_info()
+            elif choice == "3":
+                process_name = input("Enter process name: ")
+                memory_usage = self.get_process_memory_usage(process_name)
+                print("Process Memory Usage:", memory_usage, "MB")
+            elif choice == "4":
+                pid = int(input("Enter process PID: "))
+                pmap_info = self.get_pmap_info(pid)
+                print("pmap Info:", pmap_info)
+            elif choice == "5":
+                pid = int(input("Enter process PID: "))
+                duration = int(input("Enter duration (in seconds): "))
+                stderr = self.get_process_interrupts(pid, duration)
+                print("Interrupts Info:\n", stderr)
+            elif choice == "6":
+                pid = int(input("Enter process PID: "))
+                duration = int(input("Enter duration (in seconds): "))
+                output_filename = input("Enter output filename: ")
+                self.generate_call_graph_perf_data(pid, duration, output_filename)
+                print("Call Graph Perf Data generated and saved to", output_filename)
+            elif choice == "7":
+                pid = int(input("Enter process PID: "))
+                duration = int(input("Enter duration (in seconds): "))
+                self.monitor_memory_bandwidth_latency(pid, duration)
+                print("Monitoring Memory Bandwidth and Latency...")
+            elif choice == "8":
+                pid = int(input("Enter process PID: "))
+                output_file = input("Enter output filename: ")
+                self.perform_hotspot_analysis(pid, output_file)
+                print("Hotspot Analysis data saved to", output_file)
+            elif choice == "9":
+                print("Returning to Main Window.")
+                break
+            else:
+                print("Invalid choice. Please enter a valid option.")
+                return self
+            flag = input("Continue host tests? : y or n ")
+            if(flag == 'y'):
+                continue 
+            else:
+                return None
     # 获取内存信息
     def get_memory_info(self):
         virtual_memory = psutil.virtual_memory()

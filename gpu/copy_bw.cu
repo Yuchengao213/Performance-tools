@@ -62,11 +62,15 @@ void writelog(int blocknum,int threadnum,int memtransaction,double bandwidth)
 		outputFile<<blocknum<<" "<<threadnum<<" "<<memtransaction<<" "<<bandwidth<<std::endl;
 	}
 }
-int main() {
-    int N = pow(2,18);
-    int blockSize =;
-    int numBlocks =;
+int main(int argc, char** argv) {
+    if (argc < 3) {
+        std::cerr << "Usage: " << argv[0] << " <blockSize> <numBlocks>" << std::endl;
+        return 1;
+    }
 
+    int N = pow(2, 18);
+    int blockSize = atoi(argv[1]);
+    int numBlocks = atoi(argv[2]);
 
     cudaEvent_t start, stop;
     cudaEventCreate(&start);
