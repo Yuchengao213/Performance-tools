@@ -1,11 +1,20 @@
 import subprocess
+import pycuda.autoinit
+from pycuda.compiler import SourceModule
 import time
 import os
 import re
 from common import Level
-class GPULevel(Level):
-    def __init__(self):
-        super().__init__(self)
+import pycuda.gpuarray as gpuarray
+import numpy as np
+import pycuda.driver as cuda
+import pycuda.autoinit
+import pynvml
+import cupy as cp
+
+class GPULevel():
+    # def __init__(self):
+    #     super().__init__(self)
     def run(self):
         while(True):
             print("GPU Menu:")
@@ -15,7 +24,8 @@ class GPULevel(Level):
             print("4. Get NUMA Information")
             print("5. Get Video Encoder FPS and Latency Information")
             print("6. Run GPU Internal Bandwidth Test")
-            print("7. Exit GPU Menu")
+            print("7. Run Host and GPU Copy bandwidth test")
+            print("8. Exit GPU Menu")
             choice = input("Enter your choice : ")
             if choice == "1":
                 self.get_basic_info()
@@ -30,6 +40,8 @@ class GPULevel(Level):
             elif choice == "6":
                 self.run_gpu_internal_bandwidth_test()
             elif choice == "7":
+                self.h2d_d2h_bw_test()
+            elif choice == "8":
                 print("Returning to Main Window.")
                 break
             else:
@@ -147,10 +159,77 @@ class GPULevel(Level):
         else:
             print("The executable file 'copybwtest' is not found.")
             print("Please make sure to compile 'copybwtest.cu' and place it in the current directory.")
+    def h2d_d2h_bw_test(self):
+        executable_file = "./h2dd2h"
+        if not os.path.exists(executable_file):
+            # 如果可执行文件不存在，先编译程序
+            compile_command = "/usr/local/cuda/bin/nvcc h2d_d2h_bw.cu -o h2dd2h"
+            subprocess.run(compile_command, shell=True)
 
-#if __name__ == "__main__":
-    #tester = GPULevel()
-    #tester.get_gpu_pcie_info()
+        if os.path.exists(executable_file):
+            default_start = 65536
+            default_end = 262145
+            default_step = 1024
+
+            start_input = input(f"Enter the starting N (default {default_start}): ")
+            start = default_start if start_input == "" else int(start_input)
+
+            end_input = input(f"Enter the ending N (default {default_end}): ")
+            end = default_end if end_input == "" else int(end_input)
+
+            step_input = input(f"Enter the step (default {default_step}): ")
+            step = default_step if step_input == "" else int(step_input)
+
+            for N in range(start, end + 1, step):
+                print(f"Running with N={N}")
+                subprocess.run([executable_file, str(N)])
+                if(N==(start+step*8)):
+                    char = input("Press 'E' to exit, or any other key to continue the rest: ")
+                    if char.lower() == 'e':
+                        print("Exit.")
+                        break
+                    else:
+                        print("Continuing the rest loop.")
+                        continue
+        else:
+            print("The executable file 'h2dd2h' is not found.")
+            print("Please make sure to compile 'h2d_d2h_bw.cu' and place it in the current directory.")
+
+    def test_gpu_bandwidth_utilization(self):
+        # Set data size and repetitions
+        data_size_MB = 100
+        repetitions = 1000
+
+        # Create test data
+        data = cp.random.rand(data_size_MB * 1024 * 1024 // 8, dtype=cp.float32)
+
+        # Copy data to GPU memory
+        data_gpu = cp.asarray(data)
+
+        # Test transfer bandwidth
+        start_time = time.time()
+        for _ in range(repetitions):
+            cp.cuda.Stream.null.synchronize()
+            cp.copy(data_gpu, data_gpu)
+        cp.cuda.Stream.null.synchronize()
+        end_time = time.time()
+
+        # Calculate bandwidth utilization
+        data_size_bytes = data_size_MB * 1024 * 1024
+        elapsed_time = end_time - start_time
+        bandwidth_utilization = (repetitions * data_size_bytes * 2) / (elapsed_time * 1e9)  # GB/s
+
+        print(f"Data size: {data_size_MB} MB")
+        print(f"Repetitions: {repetitions}")
+        print(f"Total transferred data: {data_size_bytes / (1024 * 1024)} MB")
+        print(f"Total time: {elapsed_time:.6f} seconds")
+        print(f"Bandwidth utilization: {bandwidth_utilization:.2f} GB/s")
+
+if __name__ == "__main__":
+    tester = GPULevel()
+    # tester.get_gpu_pcie_info()
     # tester.get_gpu_mem_info()
     # tester.get_gpu_numa_info()
-    #tester.run_gpu_internal_bandwidth_test()
+    # tester.run_gpu_internal_bandwidth_test()
+    tester.test_gpu_bandwidth_utilization()
+

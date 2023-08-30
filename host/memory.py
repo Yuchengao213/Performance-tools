@@ -9,7 +9,6 @@ class HostLevel(Level):
     def __init__(self):
         super().__init__(self)
 
-    
     def run(self):
         while(True):
             print("Host Menu:")
