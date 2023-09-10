@@ -22,16 +22,17 @@ You can use the provided `install.py` script to check and install the required P
 1. **Clone the Repository:**
 
    Clone the repository to your local machine using Git:
-
+   ```bash
    git clone https://github.com/...
+      ```
 
 
 2. **Navigate to the Project Directory:**
 
    Use the `cd` command to go to the project directory:
-
+   ```bash
    cd Performance_tools
-
+   ```
 
 3. **Install Dependencies:**
 
