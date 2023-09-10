@@ -6,6 +6,7 @@ import numpy as np
 import pycuda.driver as cuda
 import pycuda.autoinit
 import pycuda.gpuarray as gpuarray
+
 import pynvml
 import cupy as cp
 import sys
