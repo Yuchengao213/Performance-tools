@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a performance testing tool that allows you to perform various network and system performance tests on different test objects such as Host, Client, and GPU. The tool is designed to help you evaluate the performance of your network and hardware components while providing the ability to __**isolate network spaces**__ (please refer to the isolate_network_space.md).
+This is a performance testing tool that allows you to perform various network and system performance tests on different test objects such as Host, Client, and GPU. The tool is designed to help you evaluate the performance of your network and hardware components while providing the ability to **__isolate network spaces__** (please refer to the isolate_network_space.md).
 
 ## Prerequisites
 
