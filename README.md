@@ -24,7 +24,7 @@ You can use the provided `install.py` script to check and install the required P
    Clone the repository to your local machine using Git:
    ```bash
    git clone https://github.com/...
-      ```
+   ```
 
 
 2. **Navigate to the Project Directory:**
@@ -80,7 +80,6 @@ Please replace `/path/to/Performance_tools` with the actual path to your `Perfor
 
 ## Host Module
 
-```markdown
 # Performance Testing Tool - Host Tests
 
 ## Introduction
@@ -95,7 +94,7 @@ The HostLevel in the Performance Testing Tool provides a set of tests and action
    
    ```bash
    python3 father.py
-```
+   ```
 
    This command opens the main menu, where you can select the "Host" option to access these tests.
 
