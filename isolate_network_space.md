@@ -73,3 +73,30 @@ ip netns exec "$netns" ping 192.168.1.5
 9. **Check Routes**: Routes are examined using `sudo ip route show` and `sudo ip netns exec "$netns" ip route show` to ensure proper configuration.
 
 10. **Ping One Way or the Other**: The script performs ping tests with commands such as `ping 192.168.1.6` and `ip netns exec "$netns" ping 192.168.1.5` to validate the connectivity between the devices located in separate namespaces.
+**Necessity:**
+
+The use of isolated network namespaces serves a crucial purpose in various scenarios, driven by the following reasons:
+
+1. **Resource Isolation:** In multi-user or multi-application environments, isolating network namespaces ensures that different applications or services do not interfere with each other. This is essential to maintain resource stability and reliability.
+
+2. **Performance Testing:** In performance testing, it's often necessary to isolate the network environment to accurately measure the performance of a specific application or service. This prevents interference from other activities affecting test results.
+
+3. **Security:** Isolating network namespaces contributes to enhanced system security. Sensitive data or services can run in independent network namespaces, reducing potential attack surfaces.
+
+4. **Resource Management:** Placing different applications or services in separate network namespaces enables more effective resource allocation and monitoring. This helps prevent resource contention and optimizes performance.
+
+**Use Cases:**
+
+Here are some common scenarios where isolated network namespaces are employed:
+
+1. **Containerized Environments:** Container technologies like Docker frequently use network namespaces to isolate the network stack of containers. Each container can have its independent network environment, preventing interference between containers.
+
+2. **Performance Testing:** In performance testing, especially when assessing network performance, creating isolated network namespaces ensures that test results accurately reflect the performance of the tested system, free from interference.
+
+3. **Multi-Tenant Systems:** In cloud computing or hosting services, multiple tenants may share the same physical server. Using isolated network namespaces ensures that each tenant's network activities do not disrupt others.
+
+4. **Security:** For applications requiring heightened security, placing them within isolated network namespaces reduces potential attack risks. This is commonly used to isolate sensitive data or services.
+
+5. **Network Function Virtualization (NFV):** In NFV environments, network functions are typically deployed in a virtualized manner. Each network function can run in its own network namespace to achieve better isolation and management.
+
+In summary, isolated network namespaces provide an effective means of isolating, managing, and optimizing network resources while ensuring system performance and security. They find widespread applications in containerization, multi-tenancy, performance testing, and security.
