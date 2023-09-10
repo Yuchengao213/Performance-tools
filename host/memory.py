@@ -5,11 +5,7 @@ import threading
 import os
 import re
 import sys
-<<<<<<< HEAD
 sys.path.append("..") 
-=======
-sys.path.append("..")  # 将父目录添加到模块搜索路径中
->>>>>>> 14c9b484b4111a5564278f2115ef3fe28fe44f53
 from Performance_tools.common import *
 class HostLevel(Level):
     def __init__(self):
