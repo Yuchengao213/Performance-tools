@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # from client.client import *
 from host.memory import HostLevel
-
+from gpu.gpu import GPULevel
 from common import *
 
 class MainApp(Level):
