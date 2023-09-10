@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a performance testing tool that allows you to perform various network and system performance tests on different test objects such as Host, Client, and GPU. The tool is designed to help you evaluate the performance of your network and hardware components.
+This is a performance testing tool that allows you to perform various network and system performance tests on different test objects such as Host, Client, and GPU. The tool is designed to help you evaluate the performance of your network and hardware components while providing the ability to **isolate network spaces**(please refer to the isolate_network_space.md).
 
 ## Prerequisites
 
@@ -14,80 +14,17 @@ Before using this tool, ensure you have the following prerequisites installed on
 ## Installation and Running
 
 You can use the provided `install.py` script to check and install the required Python packages.
-Note: Running using sudo -E father.py you are able to execute the "father.py" script with the permissions and environment of the superuser while preserving your environment variables. This can be necessary if your script requires access to system resources or files that regular users don't have permission to access.
-
-# Performance Testing Tool
-
-## Installation
-
-1. **Clone the Repository:**
-
-   Clone the repository to your local machine using Git:
-   ```bash
-   git clone https://github.com/...
-   ```
-
-
-2. **Navigate to the Project Directory:**
-
-   Use the `cd` command to go to the project directory:
-   ```bash
-   cd Performance_tools
-   ```
-
-3. **Install Dependencies:**
-
-   Run the installation script to check and install the required Python packages:
-
-   ```bash
-   python3 install.py
-   ```
-
-## Running the Application
-
-1. **Open a Terminal or Command Prompt:**
-
-   Open a terminal or command prompt on your system.
-
-2. **Navigate to the `Performance_tools` Directory:**
-
-   Use the `cd` command to navigate to the `Performance_tools` directory where the main application script is located:
-
-   ```bash
-   cd /path/to/Performance_tools
-   ```
-
-3. **Run the Main Application:**
-
-   Run the main application script, typically named `father.py`:
-
-   ```bash
-   python3 father.py
-   ```
-
-   This will start the application, and you can choose specific tests or actions from the menu.
-
-4. **Follow On-Screen Prompts:**
-
-   The tool will provide on-screen prompts and options to configure your tests or actions.
-
-5. **Exit the Application:**
-
-   To exit the tool, follow the on-screen prompts or select the "Exit" option from the menu.
-
-```
-Please replace `/path/to/Performance_tools` with the actual path to your `Performance_tools` directory.
-```
+Note: Running using `sudo -E father.py` allows you to execute the "father.py" script with the permissions and environment of the superuser while preserving your environment variables. This can be necessary if your script requires access to system resources or files that regular users don't have permission to access.
 
 ## Host Module
 
-# Performance Testing Tool - Host Tests
+### Performance Testing Tool - Host Tests
 
-## Introduction
+#### Introduction
 
-The HostLevel in the Performance Testing Tool provides a set of tests and actions for monitoring and optimizing host system performance. This menu-driven interface allows you to choose various host-related tests and actions.
+The HostLevel in the Performance Testing Tool provides a set of tests and actions for monitoring and optimizing host system performance. This menu-driven interface allows you to choose various host-related tests and actions, isolating network spaces as needed.
 
-## How to Use
+#### How to Use
 
 1. **Run the Application:**
 
@@ -175,7 +112,7 @@ The HostLevel in the Performance Testing Tool provides a set of tests and action
 
    To exit the HostLevel tests and return to the main menu, select option 20.
 
-## Important Notes
+#### Important Notes
 
 - Ensure that you have necessary permissions to run performance tests and access system information.
 
@@ -185,9 +122,9 @@ The HostLevel in the Performance Testing Tool provides a set of tests and action
 
 - Always exercise caution when making changes to system configurations.
 
-# GPU Module
+## GPU Module
 
-## Overview
+### Overview
 
 The GPU module provides access to GPU-related information and the ability to run performance tests. It offers the following key features:
 
@@ -205,7 +142,7 @@ The GPU module provides access to GPU-related information and the ability to run
 
 7. **Run Host and GPU Copy Bandwidth Test:** Perform bandwidth tests between the host and GPU to assess data transfer performance.
 
-## Usage
+### Usage
 
 1. To utilize the GPU module, select option "2" from the Main Menu.
 
@@ -213,7 +150,7 @@ The GPU module provides access to GPU-related information and the ability to run
 
 3. Follow the on-screen prompts to configure and initiate the selected test.
 
-## Important Notes
+### Important Notes
 
 - Ensure that you have the necessary permissions and drivers installed to access GPU information and run GPU-related tests.
 
@@ -223,9 +160,9 @@ The GPU module provides access to GPU-related information and the ability to run
 
 - Always consider the implications of GPU tests on other system components and applications running on the GPU.
 
-# Client Module
+## Client Module
 
-## Overview
+### Overview
 
 The Client module is designed for network performance testing and offers a variety of network-related tests. It provides the following key features:
 
@@ -235,7 +172,7 @@ The Client module is designed for network performance testing and offers a varie
 
 3. **Run NetIO ICMP:** This test involves running ICMP (Internet Control Message Protocol) tests to evaluate network performance. ICMP is commonly used for diagnostic and control purposes in IP networks.
 
-## Usage
+### Usage
 
 1. To utilize the Client module, select option "2" from the Main Menu.
 
@@ -243,7 +180,7 @@ The Client module is designed for network performance testing and offers a varie
 
 3. Configure the test parameters, including source and destination IP addresses, MAC addresses, and network interfaces, as prompted.
 
-## Important Notes
+### Important Notes
 
 - Ensure that you have the necessary permissions to run network performance tests and access network-related information.
 
