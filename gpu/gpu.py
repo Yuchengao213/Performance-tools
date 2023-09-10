@@ -2,14 +2,23 @@ import subprocess
 import time
 import os
 import re
+<<<<<<< HEAD
+=======
 import pycuda.gpuarray as gpuarray
+>>>>>>> 14c9b484b4111a5564278f2115ef3fe28fe44f53
 import numpy as np
 import pycuda.driver as cuda
 import pycuda.autoinit
+import pycuda.gpuarray as gpuarray
+
 import pynvml
 import cupy as cp
 import sys
+<<<<<<< HEAD
+sys.path.append("..") 
+=======
 sys.path.append("..")  # 将父目录添加到模块搜索路径中
+>>>>>>> 14c9b484b4111a5564278f2115ef3fe28fe44f53
 from Performance_tools.common import *
 class GPULevel(Level):
     def __init__(self):
@@ -27,7 +36,10 @@ class GPULevel(Level):
             print("7. Run Host and GPU Copy bandwidth test")
             print("8. Exit GPU Menu")
             choice = input("Enter your choice: ")
+<<<<<<< HEAD
+=======
 
+>>>>>>> 14c9b484b4111a5564278f2115ef3fe28fe44f53
             if choice == "1":
                 self.get_basic_info()
             elif choice == "2":
@@ -129,19 +141,16 @@ class GPULevel(Level):
         program_file="copy_bw.cu"
         try:
             if not os.path.exists(executable_file):
-                # 如果可执行文件不存在，先编译程序
                 compile_command = f"sudo /usr/local/cuda/bin/nvcc {program_file} -o {executable_file}"
                 subprocess.run(compile_command, shell=True)
                 
             if os.path.exists(executable_file):
-                # 可执行文件存在，提示用户输入测试参数
                 block_input = input("Enter space-separated list of block numbers: ")
                 thread_input = input("Enter space-separated list of threads per block: ")
                 
                 block_values = list(map(int, block_input.split()))
                 thread_values = list(map(int, thread_input.split()))
                 
-                # 执行测试
                 for numBlocks in block_values:
                     for blockSize in thread_values:
                         execution_command = f"{executable_file} {numBlocks} {blockSize}"
@@ -160,7 +169,6 @@ class GPULevel(Level):
     def h2d_d2h_bw_test(self):
         executable_file = "./h2dd2h"
         if not os.path.exists(executable_file):
-            # 如果可执行文件不存在，先编译程序
             compile_command = "/usr/local/cuda/bin/nvcc h2d_d2h_bw.cu -o h2dd2h"
             subprocess.run(compile_command, shell=True)
 
@@ -194,17 +202,13 @@ class GPULevel(Level):
             print("Please make sure to compile 'h2d_d2h_bw.cu' and place it in the current directory.")
 
     def test_gpu_bandwidth_utilization(self):
-        # Set data size and repetitions
         data_size_MB = 100
         repetitions = 1000
 
-        # Create test data
         data = cp.random.rand(data_size_MB * 1024 * 1024 // 8, dtype=cp.float32)
 
-        # Copy data to GPU memory
         data_gpu = cp.asarray(data)
 
-        # Test transfer bandwidth
         start_time = time.time()
         for _ in range(repetitions):
             cp.cuda.Stream.null.synchronize()
@@ -212,7 +216,6 @@ class GPULevel(Level):
         cp.cuda.Stream.null.synchronize()
         end_time = time.time()
 
-        # Calculate bandwidth utilization
         data_size_bytes = data_size_MB * 1024 * 1024
         elapsed_time = end_time - start_time
         bandwidth_utilization = (repetitions * data_size_bytes * 2) / (elapsed_time * 1e9)  # GB/s

@@ -17,17 +17,14 @@ int main(int argc, char* argv[]) {
     cudaEventCreate(&stoph2d);
     cudaEventCreate(&startd2h);
     cudaEventCreate(&stopd2h);
-    // 分配 CPU 内存
     float* hostSrc = new float[N];
     float* hostDst = new float[N];
     float elapsedTimeh2d = 0;
     float elapsedTimed2h=0;
-    // 初始化输入数据
     for (int i = 0; i < N; i++) {
         hostSrc[i] = i;
     }
 
-    // 分配 GPU 内存
     cudaMalloc((void**)&src, N * sizeof(float));
     cudaMalloc((void**)&dst, N * sizeof(float));
  
@@ -44,19 +41,14 @@ int main(int argc, char* argv[]) {
     cudaEventSynchronize(stopd2h);
     cudaEventElapsedTime(&elapsedTimed2h, startd2h, stopd2h);
     
-    // 计算运行时间
-
-    // 计算带宽
     double bandwidth= (N * sizeof(float)) / (elapsedTimeh2d * 1e6);
     std::cout << "Host to device copy Bandwidth: " << bandwidth<< " GB/s" << std::endl;
     double bandwidth_d2h= (N * sizeof(float)) / (elapsedTimed2h * 1e6);
     std::cout << "Device to host Bandwidth: " << bandwidth_d2h<< " GB/s" << std::endl;
 
-    // 释放 CPU 内存
     delete[] hostSrc;
     delete[] hostDst;
 
-    // 释放 GPU 内存
     cudaFree(src);
     cudaFree(dst);
     return 0;
