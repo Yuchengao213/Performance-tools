@@ -4,10 +4,12 @@ import subprocess
 import threading
 import os
 import re
-from ..common import *
+import sys
+sys.path.append("..")  # 将父目录添加到模块搜索路径中
+from Performance_tools.common import *
 class HostLevel(Level):
     def __init__(self):
-        super().__init__(self)
+        super().__init__()
 
     def run(self):
         while(True):
