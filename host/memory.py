@@ -5,7 +5,11 @@ import threading
 import os
 import re
 import sys
+<<<<<<< HEAD
+sys.path.append("..") 
+=======
 sys.path.append("..")  # 将父目录添加到模块搜索路径中
+>>>>>>> 14c9b484b4111a5564278f2115ef3fe28fe44f53
 from Performance_tools.common import *
 class HostLevel(Level):
     def __init__(self):
@@ -108,7 +112,6 @@ class HostLevel(Level):
                 continue 
             else:
                 return None
-    # 获取内存信息
     def get_memory_info(self):
         virtual_memory = psutil.virtual_memory()
 
@@ -119,7 +122,6 @@ class HostLevel(Level):
         print("Memory Usage Percentage: {}%".format(virtual_memory.percent))
         print("============================")
 
-    # 获取缓存信息
     def get_cache_info(self):
         cache_info = psutil.disk_usage('/')
         print("==== Cache Information ====")
@@ -137,9 +139,8 @@ class HostLevel(Level):
             if process_name.lower() in process.info['name'].lower():
                 process_memory_usage += process.info['memory_info'].rss
 
-        return process_memory_usage / (1024 * 1024)  # 转换为MB
+        return process_memory_usage / (1024 * 1024)  # MB
 
-    # 获取进程的pmap信息
     def get_pmap_info(self,pid):
         pmap_output = subprocess.check_output(["pmap", str(pid)]).decode("utf-8")
         return pmap_output
@@ -152,7 +153,6 @@ class HostLevel(Level):
         
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         
-        # 等待子进程执行完毕并获取输出
         stdout, stderr = process.communicate()
         
         return stdout, stderr
@@ -186,7 +186,6 @@ class HostLevel(Level):
         
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             
-        # 等待子进程执行完毕并获取输出
         stdout, stderr = process.communicate()
         
         return stderr
@@ -225,24 +224,18 @@ class HostLevel(Level):
 
 
     def perform_hotspot_analysis(self,pid, output_file):
-        # Run perf top command as a subprocess
         perf_process = subprocess.Popen(f"perf top -p {dpdk_pid}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
         try:
-            # Open the output file for writing
             with open(output_file, "w") as f:
                 while True:
-                    # Read a line of output from perf top
                     line = perf_process.stdout.readline()
                     if not line:
                         break
-
-                    # Write the output line to the file
                     f.write(line)
-                    f.flush()  # Make sure the data is written immediately
+                    f.flush() 
 
         except KeyboardInterrupt:
-            # Terminate the perf process if the user interrupts the script
             perf_process.terminate()
 
     def print_flow_control_status(netdev):
