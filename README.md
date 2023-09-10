@@ -14,6 +14,7 @@ Before using this tool, ensure you have the following prerequisites installed on
 ## Installation and Running
 
 You can use the provided `install.py` script to check and install the required Python packages.
+Note: Running using sudo -E father.py you are able to execute the "father.py" script with the permissions and environment of the superuser while preserving your environment variables. This can be necessary if your script requires access to system resources or files that regular users don't have permission to access.
 
 # Performance Testing Tool
 
