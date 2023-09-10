@@ -3,53 +3,83 @@
 
 The purpose of this script is to demonstrate the process of creating a new network namespace, assigning two network devices to that namespace, and configuring their IP addresses. This is done to illustrate how network namespaces can be used to isolate and manage network resources within a Linux environment. The script then performs a ping test to verify the connectivity between the devices in separate namespaces.
 
-**Script:**
-```bash
-# Define useful variables.
-$netns=ns1
-$dev1=ens785f1
-$dev2=ens786f1np1
+**Usage:**
 
-# Create a new network namespace.
-sudo ip netns add "$netns"
+To use the script, follow these steps:
 
-# Bring the devices down in the default namespace.
-sudo ip link set dev "$dev1" down
-sudo ip link set dev "$dev2" down
+1. **Save the Script:**
+   Save the following script as `isolate.sh` on your system.
 
-# Add one of the devices to the new namespace (it will disappear from the default namespace).
-sudo ip link set dev "$dev1" netns "$netns"
+   ```bash
+   #!/bin/bash
 
-# Assign IP addresses.
-sudo ip address add 192.168.1.5/24 dev "$dev2"
-sudo ip netns exec "$netns" ip address add 192.168.1.6/24 dev "$dev1"
+   # Define useful variables.
+   netns=ns1
+   dev1=ens785f1
+   dev2=ens786f1np1
 
-# Confirm the two devices are where they should be, with the right IP addresses.
-sudo ip address show
-sudo ip netns exec "$netns" ip address show
+   # Create a new network namespace.
+   sudo ip netns add "$netns"
 
-# Physically connect the two interfaces with a cable, if not yet done.
+   # Bring the devices down in the default namespace.
+   sudo ip link set dev "$dev1" down
+   sudo ip link set dev "$dev2" down
 
-# Bring the interfaces up. The namespace contains its own loopback device lo.
-# Bring it up just in case, because in general programs may want to rely on it.
-sudo ip link set dev "$dev2" up
-sudo ip netns exec "$netns" ip link set dev "$dev1" up
-sudo ip netns exec "$netns" ip link set dev lo up
+   # Add one of the devices to the new namespace (it will disappear from the default namespace).
+   sudo ip link set dev "$dev1" netns "$netns"
 
-# Check routes.
-sudo ip route show
-# Prints (among other lines):
-# 192.168.1.0/24 dev eth1 proto kernel scope link src 192.168.1.5
+   # Assign IP addresses.
+   sudo ip address add 192.168.1.5/24 dev "$dev2"
+   sudo ip netns exec "$netns" ip address add 192.168.1.6/24 dev "$dev1"
 
-# This command
-sudo ip netns exec "$netns" ip route show
-# Prints
-# 192.168.1.0/24 dev eth2 proto kernel scope link src 192.168.1.6
+   # Confirm the two devices are where they should be, with the right IP addresses.
+   sudo ip address show
+   sudo ip netns exec "$netns" ip address show
 
-# Ping one way or the other.
-ping 192.168.1.6
-ip netns exec "$netns" ping 192.168.1.5
-```
+   # Physically connect the two interfaces with a cable, if not yet done.
+
+   # Bring the interfaces up. The namespace contains its own loopback device lo.
+   # Bring it up just in case, because in general programs may want to rely on it.
+   sudo ip link set dev "$dev2" up
+   sudo ip netns exec "$netns" ip link set dev "$dev1" up
+   sudo ip netns exec "$netns" ip link set dev lo up
+
+   # Check routes.
+   sudo ip route show
+   # Prints (among other lines):
+   # 192.168.1.0/24 dev eth1 proto kernel scope link src 192.168.1.5
+
+   # This command
+   sudo ip netns exec "$netns" ip route show
+   # Prints
+   # 192.168.1.0/24 dev eth2 proto kernel scope link src 192.168.1.6
+
+   # Ping one way or the other.
+   ping 192.168.1.6
+   ip netns exec "$netns" ping 192.168.1.5
+   ```
+
+2. **Run the Script:**
+   Open a terminal and navigate to the directory where you saved `isolate.sh`.
+
+   ```bash
+   cd /path/to/script/directory
+   ```
+
+   Make the script executable:
+
+   ```bash
+   chmod +x isolate.sh
+   ```
+
+3. **Execute the Script:**
+   Run the script with root privileges using `sudo`:
+
+   ```bash
+   sudo ./isolate.sh
+   ```
+
+   This script will create a new network namespace, move one of the network devices to that namespace, configure IP addresses, and establish network connectivity between the devices in different namespaces.
 
 **Step-by-Step Explanation:**
 ================
