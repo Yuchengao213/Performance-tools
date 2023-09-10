@@ -1,24 +1,22 @@
 import subprocess
-import pycuda.autoinit
-from pycuda.compiler import SourceModule
 import time
 import os
 import re
-from common import Level
 import pycuda.gpuarray as gpuarray
 import numpy as np
 import pycuda.driver as cuda
 import pycuda.autoinit
 import pynvml
 import cupy as cp
-from ..common import *
-
-class GPULevel():
+import sys
+sys.path.append("..")  # 将父目录添加到模块搜索路径中
+from Performance_tools.common import *
+class GPULevel(Level):
     def __init__(self):
-        super().__init__(self)
+        super().__init__()
 
     def run(self):
-        while(True):
+        while True:
             print("GPU Menu:")
             print("1. Get Basic GPU Information")
             print("2. Get GPU Memory Information")
@@ -28,7 +26,8 @@ class GPULevel():
             print("6. Run GPU Internal Bandwidth Test")
             print("7. Run Host and GPU Copy bandwidth test")
             print("8. Exit GPU Menu")
-            choice = input("Enter your choice : ")
+            choice = input("Enter your choice: ")
+
             if choice == "1":
                 self.get_basic_info()
             elif choice == "2":
@@ -48,13 +47,10 @@ class GPULevel():
                 break
             else:
                 print("Invalid choice. Please enter a valid option.")
-                return self
-            flag = input("Continue GPU tests? : y or n ")
-            if(flag == 'y'):
-                continue 
-            else:
-                return None
 
+            flag = input("Continue GPU tests? (y/n): ")
+            if flag.lower() != 'y':
+                break
     def get_basic_info(self):
         try:
             result = subprocess.run(['nvidia-smi', '--query-gpu=timestamp,driver_version,name,pci.bus_id,compute_cap', '--format=csv,noheader,nounits'], stdout=subprocess.PIPE, text=True)
