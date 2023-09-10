@@ -73,7 +73,7 @@ ip netns exec "$netns" ping 192.168.1.5
 9. **Check Routes**: Routes are examined using `sudo ip route show` and `sudo ip netns exec "$netns" ip route show` to ensure proper configuration.
 
 10. **Ping One Way or the Other**: The script performs ping tests with commands such as `ping 192.168.1.6` and `ip netns exec "$netns" ping 192.168.1.5` to validate the connectivity between the devices located in separate namespaces.
-**Necessity:**
+## Necessity:
 
 The use of isolated network namespaces serves a crucial purpose in various scenarios, driven by the following reasons:
 
@@ -85,7 +85,7 @@ The use of isolated network namespaces serves a crucial purpose in various scena
 
 4. **Resource Management:** Placing different applications or services in separate network namespaces enables more effective resource allocation and monitoring. This helps prevent resource contention and optimizes performance.
 
-**Use Cases:**
+## Use Cases:
 
 Here are some common scenarios where isolated network namespaces are employed:
 
