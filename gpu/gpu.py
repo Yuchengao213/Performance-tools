@@ -2,23 +2,14 @@ import subprocess
 import time
 import os
 import re
-<<<<<<< HEAD
-=======
-import pycuda.gpuarray as gpuarray
->>>>>>> 14c9b484b4111a5564278f2115ef3fe28fe44f53
 import numpy as np
 import pycuda.driver as cuda
 import pycuda.autoinit
 import pycuda.gpuarray as gpuarray
-
 import pynvml
 import cupy as cp
 import sys
-<<<<<<< HEAD
 sys.path.append("..") 
-=======
-sys.path.append("..")  # 将父目录添加到模块搜索路径中
->>>>>>> 14c9b484b4111a5564278f2115ef3fe28fe44f53
 from Performance_tools.common import *
 class GPULevel(Level):
     def __init__(self):
@@ -36,10 +27,6 @@ class GPULevel(Level):
             print("7. Run Host and GPU Copy bandwidth test")
             print("8. Exit GPU Menu")
             choice = input("Enter your choice: ")
-<<<<<<< HEAD
-=======
-
->>>>>>> 14c9b484b4111a5564278f2115ef3fe28fe44f53
             if choice == "1":
                 self.get_basic_info()
             elif choice == "2":
