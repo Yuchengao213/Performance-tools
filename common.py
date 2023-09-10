@@ -1,5 +1,6 @@
+
 class Level:
     def __init__(self):
-        self.__init__()
+        pass    
     def run(self):
         pass

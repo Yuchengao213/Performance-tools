@@ -11,10 +11,12 @@ import pycuda.driver as cuda
 import pycuda.autoinit
 import pynvml
 import cupy as cp
+from ..common import *
 
 class GPULevel():
-    # def __init__(self):
-    #     super().__init__(self)
+    def __init__(self):
+        super().__init__(self)
+
     def run(self):
         while(True):
             print("GPU Menu:")
@@ -227,9 +229,10 @@ class GPULevel():
 
 if __name__ == "__main__":
     tester = GPULevel()
-    # tester.get_gpu_pcie_info()
-    # tester.get_gpu_mem_info()
-    # tester.get_gpu_numa_info()
-    # tester.run_gpu_internal_bandwidth_test()
-    tester.test_gpu_bandwidth_utilization()
+    tester.run()
+#     # tester.get_gpu_pcie_info()
+#     # tester.get_gpu_mem_info()
+#     # tester.get_gpu_numa_info()
+#     # tester.run_gpu_internal_bandwidth_test()
+#     tester.test_gpu_bandwidth_utilization()
 
