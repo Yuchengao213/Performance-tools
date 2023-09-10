@@ -13,9 +13,8 @@ Before using this tool, ensure you have the following prerequisites installed on
 
 ## Installation and Running
 
-You can use the provided `install.py` script to check and install the required Python packages. Simply run the following command:
+You can use the provided `install.py` script to check and install the required Python packages.
 
-```markdown
 # Performance Testing Tool
 
 ## Installation
