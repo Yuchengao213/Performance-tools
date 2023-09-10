@@ -2,11 +2,8 @@
 # from client.client import *
 from host.memory import HostLevel
 from gpu.gpu import GPULevel
-<<<<<<< HEAD
 from client.client import ClientLevel
 
-=======
->>>>>>> 14c9b484b4111a5564278f2115ef3fe28fe44f53
 from common import *
 
 class MainApp(Level):
@@ -26,13 +23,8 @@ class MainApp(Level):
                 host = HostLevel()
                 host.run()
             elif choice == "2":
-<<<<<<< HEAD
                 client = ClientLevel()
                 client.run()  
-=======
-                # client = ClientLevel()
-                # client.run()  
->>>>>>> 14c9b484b4111a5564278f2115ef3fe28fe44f53
                 pass
             elif choice == "3":
                 gpu = GPULevel()
